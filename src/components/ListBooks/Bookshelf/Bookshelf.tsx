@@ -1,5 +1,6 @@
 import React from 'react';
 import BookType from '../../../interfaces/BookType';
+import { Shelf } from '../../../interfaces/ShelfType';
 import Book from '../../Book/Book';
 import "./Bookshelf.css"
 
@@ -9,11 +10,11 @@ const Bookshelf = ({
   onMove,
 }: {
   books: BookType[];
-  shelf: any;
+  shelf: Shelf;
   onMove: Function;
 }) => {
   const booksOnThisShelf = books.filter(book => book.shelf === shelf.key);
-  // console.log('booksOnThisShelf', booksOnThisShelf);
+
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{shelf.name}</h2>

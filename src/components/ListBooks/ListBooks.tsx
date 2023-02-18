@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import BookType from "../../interfaces/BookType";
+import { Shelf } from "../../interfaces/ShelfType";
 import Bookshelf from "./Bookshelf/Bookshelf";
 import "./ListBooks.css";
 
@@ -10,7 +11,7 @@ const ListBooks = ({
   onMove,
 }: {
   books: BookType[];
-  bookshelves: any;
+  bookshelves: Shelf[];
   onMove: Function;
 }) => {
   return (
@@ -20,7 +21,7 @@ const ListBooks = ({
       </div>
       <div className="list-books-content">
         <div>
-          {bookshelves.map((shelf: any) => (
+          {bookshelves.map((shelf: Shelf) => (
             <Bookshelf
               key={shelf.key}
               shelf={shelf}

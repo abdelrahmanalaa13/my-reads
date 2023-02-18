@@ -12,8 +12,6 @@ const SearchResults = ({
   searchBooks: BookType[];
   onMove: Function;
 }) => {
-  // const { searchBooks, myBooks, onMove } = props;
-
   const updatedBooks = searchBooks.map(book => {
     myBooks.map(b => {
       if (b.id === book.id) {

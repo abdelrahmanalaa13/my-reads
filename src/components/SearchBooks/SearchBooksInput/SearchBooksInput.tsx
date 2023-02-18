@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./SearchBooksInput.css";
 
-const SearchBooksInput = (props: any) => {
+const SearchBooksInput = ({onSearch}: {onSearch: Function}) => {
   const [value, setValue] = useState('');
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
     setValue(val);
-    props.onSearch(val);
+    onSearch(val);
   };
 
   return (

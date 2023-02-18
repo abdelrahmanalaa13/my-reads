@@ -8,12 +8,12 @@ const BookshelfChanger = ({
   onMove,
 }: {
   book: BookType;
-  shelf: any;
+  shelf: string;
   onMove: Function;
 }) => {
   const [value, setValue] = useState(shelf);
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     setValue(value);
     onMove(book, value);
