@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import BookType from "../../../interfaces/BookType";
 import "./BookshelfChanger.css";
 
@@ -11,16 +11,14 @@ const BookshelfChanger = ({
   shelf: string;
   onMove: Function;
 }) => {
-  const [value, setValue] = useState(shelf);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setValue(value);
     onMove(book, value);
   };
   return (
     <div className="book-shelf-changer">
-      <select value={value} onChange={handleChange}>
+      <select value={shelf} onChange={handleChange}>
         <option value="move" disabled>
           Move to...
         </option>

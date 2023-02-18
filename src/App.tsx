@@ -1,70 +1,39 @@
 import { Component } from "react";
-import { Route, Routes } from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
-import "./App.css";
+import { connect } from "react-redux";
+import { Routes, Route } from "react-router-dom";
 import { debounce } from "throttle-debounce";
 import ListBooks from "./components/ListBooks/ListBooks";
 import SearchBooks from "./components/SearchBooks/SearchBooks";
 import BookType from "./interfaces/BookType";
+import { Dispatch } from "redux";
+import "./App.css";
+import * as actions from "./store/actions/actions";
 
 const bookshelves = [
   { key: "currentlyReading", name: "Currently Reading" },
   { key: "wantToRead", name: "Want to Read" },
   { key: "read", name: "Read" },
 ];
-class BooksApp extends Component {
-  state = {
-    myBooks: [],
-    searchBooks: [],
-    error: false,
-  };
+
+type MyState = {
+  myBooks: BookType[];
+  searchBooks: BookType[];
+  error: boolean;
+};
+
+class BooksApp extends Component<any, MyState> {
   componentDidMount = () => {
-    BooksAPI.getAll()
-      .then((books) => {
-        this.setState({ myBooks: books });
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({ error: true });
-      });
+    this.props.onInitBooks();
   };
   moveBook = (book: BookType, shelf: string) => {
-    BooksAPI.update(book, shelf).catch((err) => {
-      console.log(err);
-      this.setState({ error: true });
-    });
-    if (shelf === "none") {
-      this.setState((prevState: any) => ({
-        myBooks: prevState.myBooks.filter((b: BookType) => b.id !== book.id),
-      }));
-    } else {
-      book.shelf = shelf;
-      this.setState((prevState: any) => ({
-        myBooks: prevState.myBooks
-          .filter((b: BookType) => b.id !== book.id)
-          .concat(book),
-      }));
-    }
-  };
-  searchForBooks = debounce(300, (query) => {
-    if (query.length > 0) {
-      BooksAPI.search(query, null).then((books) => {
-        if (books.error) {
-          this.setState({ searchBooks: [] });
-        } else {
-          this.setState({ searchBooks: books });
-        }
-      });
-    } else {
-      this.setState({ searchBooks: [] });
-    }
-  });
-  resetSearch = () => {
-    this.setState({ searchBooks: [] });
+    this.props.onUpdateBook(book, shelf);
   };
 
+  searchForBooks = debounce(300, (text) => this.props.onSearchedBooks(text));
+
+  resetSearch = () => this.props.onResetSearchedBooks();
   render() {
-    const { myBooks, searchBooks, error } = this.state;
+    const { myBooks, searchBooks, error } = this.props;
     if (error) {
       return <div>Network error. Please try again later.</div>;
     }
@@ -89,7 +58,7 @@ class BooksApp extends Component {
                 myBooks={myBooks}
                 onSearch={this.searchForBooks}
                 onMove={this.moveBook}
-                onResetSearch={this.resetSearch}
+                resetSearch={this.resetSearch}
               />
             }
           />
@@ -99,4 +68,23 @@ class BooksApp extends Component {
   }
 }
 
-export default BooksApp;
+const mapStateToProps = (state: MyState) => {
+  return {
+    myBooks: state.myBooks,
+    searchBooks: state.searchBooks,
+    error: state.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch | any) => {
+  return {
+    onUpdateBook: (book: BookType, shelf: string) =>
+      dispatch(actions.updateBook(book, shelf)),
+    onInitBooks: () => dispatch(actions.initBooks()),
+    onResetSearchedBooks: () => dispatch(actions.resetSearchedBooks()),
+    onSearchedBooks: (bookName: string) =>
+      dispatch(actions.searchForBooks(bookName)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BooksApp);
