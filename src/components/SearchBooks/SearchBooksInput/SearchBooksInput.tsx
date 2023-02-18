@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import "./SearchBooksInput.css";
 
 const SearchBooksInput = ({onSearch}: {onSearch: Function}) => {
-  const [value, setValue] = useState('');
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.value;
-    setValue(val);
     onSearch(val);
   };
 
@@ -13,9 +11,8 @@ const SearchBooksInput = ({onSearch}: {onSearch: Function}) => {
     <div className="search-books-input-wrapper">
       <input
         type="text"
-        value={value}
         placeholder="Search by title or author"
-        onChange={handleChange}
+        onInput={handleChange}
         autoFocus
       />
     </div>

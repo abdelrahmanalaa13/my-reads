@@ -8,21 +8,20 @@ const SearchBooks = ({
   searchBooks,
   myBooks,
   onSearch,
-  onResetSearch,
+  resetSearch,
   onMove,
 }: {
   searchBooks: BookType[];
   myBooks: BookType[];
   onSearch: Function;
-  onResetSearch: React.MouseEventHandler<HTMLButtonElement>;
+  resetSearch: React.MouseEventHandler<HTMLButtonElement> | any;
   onMove: Function;
 }) => {
-  // const { searchBooks, myBooks, onSearch, onResetSearch, onMove } = props;
   return (
     <div className="search-books">
       <div className="search-books-bar">
         <Link to="/">
-          <button className="close-search" onClick={onResetSearch}>
+          <button className="close-search" onClick={resetSearch}>
             Close
           </button>
         </Link>
