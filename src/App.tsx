@@ -1,13 +1,13 @@
 import { Component } from "react";
 import { Route, Routes } from "react-router-dom";
-
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import { debounce } from "throttle-debounce";
 import ListBooks from "./components/ListBooks/ListBooks";
 import SearchBooks from "./components/SearchBooks/SearchBooks";
+import BookType from "./interfaces/BookType";
 
-const bookshelves: any = [
+const bookshelves = [
   { key: "currentlyReading", name: "Currently Reading" },
   { key: "wantToRead", name: "Want to Read" },
   { key: "read", name: "Read" },
@@ -28,20 +28,20 @@ class BooksApp extends Component {
         this.setState({ error: true });
       });
   };
-  moveBook = (book: any, shelf: any) => {
+  moveBook = (book: BookType, shelf: string) => {
     BooksAPI.update(book, shelf).catch((err) => {
       console.log(err);
       this.setState({ error: true });
     });
     if (shelf === "none") {
       this.setState((prevState: any) => ({
-        myBooks: prevState.myBooks.filter((b: any) => b.id !== book.id),
+        myBooks: prevState.myBooks.filter((b: BookType) => b.id !== book.id),
       }));
     } else {
       book.shelf = shelf;
       this.setState((prevState: any) => ({
         myBooks: prevState.myBooks
-          .filter((b: any) => b.id !== book.id)
+          .filter((b: BookType) => b.id !== book.id)
           .concat(book),
       }));
     }

@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
 import SearchBooksInput from "./SearchBooksInput/SearchBooksInput";
 import SearchResults from "./SearchResults/SearchResults";
-import "./SearchBooks.css"
+import "./SearchBooks.css";
+import BookType from "../../interfaces/BookType";
 
-const SearchBooks = (props: any) => {
-  const { searchBooks, myBooks, onSearch, onResetSearch, onMove } = props;
+const SearchBooks = ({
+  searchBooks,
+  myBooks,
+  onSearch,
+  onResetSearch,
+  onMove,
+}: {
+  searchBooks: BookType[];
+  myBooks: BookType[];
+  onSearch: Function;
+  onResetSearch: React.MouseEventHandler<HTMLButtonElement>;
+  onMove: Function;
+}) => {
+  // const { searchBooks, myBooks, onSearch, onResetSearch, onMove } = props;
   return (
     <div className="search-books">
       <div className="search-books-bar">

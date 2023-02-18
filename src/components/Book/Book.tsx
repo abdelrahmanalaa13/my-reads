@@ -8,7 +8,7 @@ const Book = ({
   onMove,
 }: {
   book: BookType;
-  shelf: any;
+  shelf: string;
   onMove: Function;
 }) => (
   <li>
