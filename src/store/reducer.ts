@@ -29,7 +29,7 @@ const reducer = (state = initialState, action: AnyAction) => {
         myBooks: state.myBooks.filter((b: BookType) => b.id !== action.bookId),
       });
     case actionTypes.RESET_SEARCH_BOOKS:
-      return updateObject(state, { searchBooks: initialState.searchBooks });
+      return updateObject(state, { searchBooks: [] });
 
     default:
       return state;

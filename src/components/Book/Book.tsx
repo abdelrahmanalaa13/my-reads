@@ -1,6 +1,6 @@
 import BookType from "../../interfaces/BookType";
 import BookshelfChanger from "./BookshelfChanger/BookshelfChanger";
-import "./Book.css"
+import "./Book.css";
 
 const Book = ({
   book,
@@ -16,15 +16,13 @@ const Book = ({
       <div className="book-top">
         <div
           className="book-cover"
-          style={{
-            width: 128,
-            height: 193,
-            backgroundImage: `url(${
-              book.imageLinks
-                ? book.imageLinks.thumbnail
-                : "icons/book-placeholder.svg"
-            })`,
-          }}
+          style={
+            book.imageLinks
+              ? {
+                  backgroundImage: `url(${book.imageLinks.thumbnail})`,
+                }
+              : {}
+          }
         />
         <BookshelfChanger book={book} shelf={shelf} onMove={onMove} />
       </div>

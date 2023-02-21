@@ -73,13 +73,13 @@ export const searchForBooks = (bookName: string) => {
     if (bookName.length) {
       BooksAPI.search(bookName, null).then((books) => {
         if (books.error) {
-          resetSearchedBooks();
+          dispatch(resetSearchedBooks());
         } else {
           dispatch(setSearchedBooks(books));
         }
       });
     } else {
-      resetSearchedBooks();
+      dispatch(resetSearchedBooks());
     }
   };
 };
