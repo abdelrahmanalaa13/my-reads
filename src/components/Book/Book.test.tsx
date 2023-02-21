@@ -66,8 +66,6 @@ describe("<SearchBooks />", () => {
       preventDefault() {},
       target: { value: "read" },
     };
-    console.log(BookshelfChangerEl);
-
     BookshelfChangerEl.find("select").simulate("change", event);
     expect(onMove).toBeCalledWith(Book, "read");
   });
